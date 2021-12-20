@@ -1,0 +1,191 @@
+\documentclass[11pt]{article}    
+\usepackage[loose,nice]{units} %replace "nice" by "ugly" for units in upright fractions
+\usepackage{fontspec}
+\setmainfont{Arial}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\input{structure.tex}
+
+
+
+\title{ECS759P Artificial Intelligence: Coursework 2} % Title of the assignment
+
+\author{Suyog Pipliwal\\ \texttt{210634338}} % Author name and email address
+
+\date{Queen Mary University of London --- \today} % University, school and/or department name(s) and a date
+
+\begin{document}
+	\maketitle
+\begin{abstract}
+	This report is the reflection of work done for coursework 2 for module ECS759P. 
+\end{abstract}
+\section*{Question 1}
+Yesterday I went to Madame Irma the most famous (and serious) fortune teller in London to find my lover. There was a sign saying \textbf{Everything that I say must be proved to be believed.} After meeting her she said the following sentence to me. 
+\begin{enumerate}
+	\item You have a dog.
+	\item The person you are looking for buys carrots by the bushel.
+	\item Anyone who owns a rabbit hates anything that chases any rabbit.
+	\item Every dog chases some rabbit.
+	\item Anyone who buys carrots by the bushel owns either a rabbit or a grocery store.
+	\item Someone who hates something owned by another person will not date that person.
+\end{enumerate}
+This reminds me of my friend Robin. But before you leave, she challenges you with a conclusion: \textbf{If the person you are looking for does not own a grocery, she will not date you.}\newline
+\begin{enumerate}
+	\item Expressing  Madame Irma into  First Order Logic (FOL) 
+	\begin{enumerate}
+		\item $\exists x \mkern2mu  dog(x) \land owns(you,x)$
+		\item  $buybushel(Robin)$
+		\item $\forall x \forall y \mkern2mu  ( rabbit(y) \land owns(x,y) ) \implies \forall u \forall v \mkern2mu ( chases(u,v) \land rabbit(v) ) \implies hates(x,u)$
+		\item $\forall x \mkern2mu  dog(x) \implies \exists y \mkern2mu rabbit(y) \land chases(x,y)$
+		\item $\forall x \exists y \mkern2mu  buybushel(x) \implies owns(x,y) \land ( rabbit(y) \lor grocery(y))$  
+		\item $\forall x \forall y \forall z  \mkern2mu  hates(x,z) \land owns(y,z) \implies \neg date(x,y) $ 
+	\end{enumerate}
+\item Converting into Conjunctive Normal Forms (CNF)
+	\begin{enumerate}
+		\item $dog(a)$
+		\item $owns(you,a)$
+		\item $buybushel(Robin)$  
+		\item $\neg rabbit(x1) \lor \neg owns(x2,x1) \lor \neg chase(x3,x4) \lor \neg rabbit(x4) \lor hates(x2,x3)$
+		\item $\neg buybushel(x6) \lor owns(x6,f2(x6)$\newline  $\neg buybushel(x6) \lor rabbit(f2(x6)) \lor grocery(f2(x6))$
+		\item $\neg hates(x7,x9) \lor \neg owns(x8,x9) \lor \neg date(x7,x8)$
+	\end{enumerate}
+\item Transform Madame Irma’s conclusion into FOL, negate it and convert it to a CNF Madame Irma's conclusion:-
+	\begin{enumerate}
+		\item $ \neg grocery(x10) \lor \neg owns(Robin,x10)$\newline
+		\item $ date(Robin,you)$
+	\end{enumerate}
+\item To prove that Madame Irma's conclusion is right, we negate that statement and prove that the negation is false, which in turn means that the conclusion is right.
+\begin{enumerate}
+
+\item $ date(Robin,you)$ \hspace{1cm} $\neg hates(x7,x9) \lor \neg owns(x8,x9) \lor \neg date(x7,x8)$ \hspace{1cm} \textcolor{blue}{$\{Robin/x7,you/x8\}$}  \newline 
+Result: $\neg hates(Robin,x9) \lor \neg owns(you,x9)$
+
+\item $\neg hates(Robin,x9) \lor \neg owns(you,x9)$ \hspace{1cm} $\neg rabbit(x1) \lor \neg owns(x2,x1) \lor \neg chases(x3,x4) \lor \neg rabbit(x4) \lor hates(x2,x3)$ \hspace{1cm} \textcolor{blue}{$\{Robin/x2,x9/x3\}$ } \newline 
+Result: $\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg chases(x9,x4) \lor \neg rabbit(x4) \lor \neg owns(you,x9)$ 
+
+\item $\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg chases(x9,x4) \lor \neg rabbit(x4) \lor \neg owns(you,x9)$ \hspace{1cm} $owns(you,a)$ \hspace{1cm} \textcolor{blue}{$\{a/x9\}$}  \newline 
+Result:$\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg chases(a,x4) \lor \neg rabbit(x4)$  
+
+\item $\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg chases(a,x4) \lor \neg rabbit(x4)$ \hspace{1cm} $\neg dog(x5) \lor chases(x5,f1(x5))$ \hspace{1cm}\textcolor{blue}{ $\{a/x5,f1(a)/x4\}$ } \newline 
+Result:$\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg rabbit(f1(a)) \lor \neg dog(a)$ 
+
+\item $\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg rabbit(f1(a)) \lor \neg dog(a)$ \hspace{1cm} $dog(a)$ \hspace{1cm}   \newline 
+Result:$\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg rabbit(f1(a))$ 
+
+\item $\neg rabbit(x1) \lor \neg owns(Robin,x1) \lor \neg rabbit(f1(a))$  \hspace{1cm} $\neg buybushel(x6) \lor rabbit(f2(x6)) \lor grocery(f2(x6))$ \hspace{1cm}\textcolor{blue}{ $\{f2(x6)/x1\}$ } \newline 
+Result:$ \neg owns(Robin,f2(x6)) \lor \neg rabbit(f1(a)) \lor \neg buybushel(x6) \lor grocery(f2(x6))$ 
+
+\item $ \neg owns(Robin,f2(x6))  \lor \neg rabbit(f1(a)) \lor \neg buybushel(x6)  \lor  grocery(f2(x6))$ \hspace{1cm} $buybushel(Robin)$ \hspace{1cm}\textcolor{blue}{ $\{Robin/x6\}$ } \newline 
+Result: $ \neg owns(Robin,f2(Robin)) \lor \neg rabbit(f1(a)) \lor grocery(f2(Robin))$ 
+
+\item $ \neg owns(Robin,f2(Robin)) \lor \neg rabbit(f1(a)) \lor grocery(f2(Robin))$ \hspace{1cm} $\neg dog(x5) \lor rabbit(f1(x5))$ \hspace{1cm}\textcolor{blue}{ $\{a/x5\}$ } \newline 
+Result: $ \neg owns(Robin,f2(Robin)) \lor grocery(f2(Robin)) \lor \neg dog(a)$
+
+\item $ \neg owns(Robin,f2(Robin)) \lor grocery(f2(Robin)) \lor \neg dog(a)$ \hspace{1cm} $dog(a)$ \hspace{1cm}   \newline 
+Result: $ \neg owns(Robin,f2(Robin)) \lor grocery(f2(Robin))$ 
+
+\item $ \neg owns(Robin,f2(Robin)) \lor grocery(f2(Robin))$ \hspace{1cm} $\neg buybushel(x6) \lor owns(x6,f2(x6)$ \hspace{1cm}\textcolor{blue}{ $\{Robin/x6\}$ } \newline 
+Result: $ grocery(f2(Robin)) \lor \neg buybushel(Robin)$
+
+\item $ grocery(f2(Robin)) \lor \neg buybushel(Robin)$ \hspace{1cm} $buybushel(Robin)$ \hspace{1cm}   \newline 
+Result: $ grocery(f2(Robin))$ 
+
+\item $ grocery(f2(Robin))$ \hspace{1cm} $ \neg grocery(x10) \lor \neg owns(Robin,x10)$ \hspace{1cm}\textcolor{blue}{ $\{f2(Robin)/x10\}$ } \newline 
+Result: $ \neg owns(Robin,f2(Robin)) $ 
+
+\item $ \neg owns(Robin,f2(Robin)) $ \hspace{1cm} $\neg buybushel(x6) \lor owns(x6,f2(x6)$ \hspace{1cm}\textcolor{blue}{ $\{Robin/x6\}$}  \newline 
+Result:$\neg buybushel(Robin)$  
+
+\item $\neg buybushel(Robin)$ \hspace{1cm} $buybushel(Robin)$ \hspace{1cm} \textcolor{blue}{$\{Robin/x6\}$ } \newline 
+Result: \{\}  
+
+
+The statement 4.m ($\neg buybushel(Robin)$) contradicts the CNF statement number 2.c ($buybushel(Robin)$)
+\end{enumerate}
+\end{enumerate}
+\section*{Question 2}
+In this question, we have to implement a Convolutional Neural Network(CNN) to distinguish between different types of clothes and other fashion accessories. The dataset that we used for this purpose is 
+fashion-mnist which consist of 60,000 greyscale images of different fashion accessories for training purpose and 10,000 images for testing purpose. The size of each image is 28x28 and has only one channel i.e. greyscale channel. The name "convolutional neural network" indicates that the network employs a mathematical operation called convolution. Convolutional networks are a specialized type of neural network that use convolution in place of general matrix multiplication in at least one of their layers. Each convolution layer and followed by an activation function. This activation function defines the output for each neuron from the given input. Thus choosing the right activation is essential for any CNN performance. We will see how different activation functions affect the classification accuracy in the following section. After the activation function, we have a pooling layer to reduce the dimensions of data by combining the outputs of neuron clusters at one layer into a single neuron in the next layer. This architecture is repeated multiple times to create deep CNN. After performing convolution we have a fully connected layer that produces the final output. In each fully connected layer we calculated the loss using the loss function and using this loss we update the weight for each neuron based on the optimising algorithm that we have the choice of our model. Thus choosing the right loss function and an optimising algorithm is important for our model performance. We have discussed all this in the following sections.
+ \begin{enumerate}[label=(\alph*)]
+	\item Deep learning neural networks are trained using a stochastic gradient descent optimization algorithm. We estimated the error for each iteration and use this error for updating the weights in the network. This error function is conventionally called the loss function. Neural networks learn the mapping of input to output from the given data and the choice of the loss function. The loss function should fit the given problem such as regression or classification. We have different loss functions for each type of problem as in regression we generally use Mean square error loss function, Mean Squared Logarithmic Error Loss or Mean Absolute Error Loss. For binary classification, we use Binary Cross-Entropy, or Hinge Loss function. For multi-label classification, we use Multi-Class Cross-Entropy Loss, Multi-Class Cross-Entropy Loss or Multi-Class Cross-Entropy Loss function. For this specific problem, we are using Multi-Class Cross-Entropy Loss which is the default loss function for all multi-class classification problems. 
+	
+	\item We have trained the Convolutional Neural Network(CNN)
+	
+	\begin{figure}[h]
+	 \includegraphics[scale=0.40]{cnn.png}
+	 \caption{ CNN Architecture }
+	 \label{fig: arch}
+	 
+	 \includegraphics[scale=0.5]{accuracy for l 0.1.png}
+	 \caption{ Accuracy Vs Epoch }
+	 \label{fig:accuracy plot}
+	\end{figure}
+	with the  architecture, as shown in Figure 1 over the  fashion MNIST dataset using \textit{ReLU} as the activation function, a stochastic gradient descent(SGD) optimiser with a learning rate = 0.1 and number of epoch = 50
+	
+	Refering to Figure ~\ref{fig:accuracy plot}, we obtained the final training accuracy of 100\% and testing accuracy of 92.27\%.  Figure ~\ref{fig:accuracy plot} show testing and training accuracy for each epoch.
+	We can see that the current architecture fit our dataset and we achieve very high accuracy for both testing and training accuracy. We can further optimize our results by changing our learning rate and increasing the number of epoch. 
+	\item Now, we experiment with different activation functions and learning rates used in our model. We will change our activation from \textit{ReLU} to \textit{Tanh, Sigmoid and ELU} and see how it affect our final classification accuracy.\newline 
+	\begin{center}
+		\begin{tabular}{|c |c c|} 
+			\hline
+			Activation funtion & Accuracy \%& \\ 
+			\hline
+			\textit{ReLU} & 92.27  &\\ 
+			\hline
+			\textit{Tanh}  & 91.7  &\\
+			\hline
+			\textit{Sigmoid} & 90.16 &\\
+			\hline
+			\textit{ELU} & 90.23  &\\  
+			\hline
+		\end{tabular}
+	\end{center}
+\textit{ReLU} is state of art activation function which produce highest accuracy as we can see from the table.
+Now we will fix our activation function to \textit{ReLU} and change the learning rate to see it effect on accuracy
+	\begin{center}
+	\begin{tabular}{|c |c c|} 
+		\hline
+	Learning Rate & Accuracy \%& \\ 
+		\hline
+		0.001 & 89.04  &\\
+		\hline
+		0.1 & 92.27 &\\
+		\hline
+		0.5 & 10.0(underfitting)  &\\  
+		\hline
+		1 & 10.0(underfitting)  &\\  
+		\hline
+		10 & 10.0(underfitting)  &\\  
+		\hline
+	\end{tabular}
+\end{center}
+Learning rate controls how much to change the model in response to the loss each time the model weights are updated. If the learning rate is too high it going to pass the minimum point of our loss function and cause our model to underfit which can be seen from our above table. 
+
+But if the learning rate is too low i.e. 0.001 it gonna converge at a minimum of function but it takes higher number of epoch to reach. Given that we have a 50 epoch learning rate of 0.1 converge the loss function at minima and we got the highest accuracy. 
+\item \textbf{Dropout} is a technique where we turn off or drop out some neurons in the given layer. Each neuron has a probability 'p' to drop out. It is done to prevent the overfitting of the model during training. By introducing a drop in the second fully connected layer with p = 0.3 and keeping everything same as in part a we got an accurcay of 91.45\%. 
+	\begin{figure}[h]
+	\includegraphics[scale=0.40]{dropout-0.3.png}
+	\caption{Accuracy vs Epoch with dropout p = 0.3}
+	\label{fig: dropout_0.3}
+\end{figure}
+The Figure \ref{fig: dropout_0.3} show training and testing accuracy for each epoch.  The performance slightly decrease but if increase the number of epoch it going to converge and we will have better result. 
+
+If we increase p from 0.3 to 0.5 we got accuracy of 90.94\%. as we can see in Figure \ref{fig: dropout_0.5}
+\begin{figure}[htp]
+	\subfloat[p=0.5]{%
+		\includegraphics[width=0.4\textwidth]{dropout-0.5.png}%
+		\label{fig: dropout_0.5}%
+	}%
+	\hfill%
+	\subfloat[p=0.2]{%
+		\includegraphics[width=0.4\textwidth]{dropout-0.2.png}%
+		\label{fig: dropout_0.2}%
+	}%
+    \caption{Accuracy vs epoch for different values of p}
+\end{figure}
+If we decrease the p from 0.3 to 0.2 we get the accuracy of 91.43\% and Figure \ref{fig: dropout_0.2} corresponding to it.
+
+\end{enumerate}
+
+\end{document}  
