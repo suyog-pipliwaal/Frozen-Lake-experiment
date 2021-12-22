@@ -1,6 +1,5 @@
 from emvironementModel import EnvironmentModel
 
-§
 class Environment(EnvironmentModel):
     def __init__(self, n_states, n_actions, max_steps, pi, seed=None):
         EnvironmentModel.__init__(self, n_states, n_actions, seed)
