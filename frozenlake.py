@@ -1,4 +1,16 @@
 import numpy as np
+from environment import Environment
+import contextlib
+
+# Configures numpy print options
+@contextlib.contextmanager
+def _printoptions(*args, **kwargs):
+    original = np.get_printoptions()
+    np.set_printoptions(*args, **kwargs)
+    try:
+        yield
+    finally: 
+        np.set_printoptions(**original)
 class FrozenLake(Environment):
 
     def __init__(self, lake, slip, max_steps, seed=None):
@@ -15,13 +27,13 @@ class FrozenLake(Environment):
         
         self.slip = slip
         
-        n_states = self.lake.size + 1
-        n_actions = 4
+        self.n_states = self.lake.size + 1
+        self.n_actions = 4
         
-        pi = np.zeros(n_states, dtype=float)
+        pi = np.zeros(self.n_states, dtype=float)
         pi[np.where(self.lake_flat == '&')[0]] = 1.0
         
-        self.absorbing_state = n_states - 1
+        self.absorbing_state = self.n_states - 1
 
         self.action_probabilities = np.load('p.npy')
         
