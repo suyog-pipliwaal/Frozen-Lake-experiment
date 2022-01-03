@@ -11,6 +11,7 @@ def _printoptions(*args, **kwargs):
         yield
     finally: 
         np.set_printoptions(**original)
+
 class FrozenLake(Environment):
 
     def __init__(self, lake, slip, max_steps, seed=None):
@@ -112,13 +113,14 @@ class FrozenLake(Environment):
 
         return True    
 
-
+    #NEW METHOD
     def hole_state(self, state):
         if state == self.absorbing_state:
             return False
 
         return self.lake_flat[int(state)] == '#'
 
+    #NEW METHOD
     def goal_state(self, state):
         if state == self.absorbing_state:
             return False
