@@ -32,7 +32,7 @@ class FrozenLake(Environment):
 
         self.action_probabilities = np.load('p.npy')
 
-       self.width = len(lake[0])
+        self.width = len(lake[0])
         self.height = len(lake)
 
         Environment.__init__(self, n_states, n_actions, max_steps, pi, seed)
