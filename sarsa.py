@@ -4,15 +4,15 @@ import numpy as np
 from chooseAction import choose_action
 def sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
     random_state = np.random.RandomState(seed)
-    
-    eta = np.linspace(eta, 0, max_episodes) 
+
+    eta = np.linspace(eta, 0, max_episodes)
     # eta is the learning rate decay linearly eta[i] is the learning rate for episode i
-    
+
     epsilon = np.linspace(epsilon, 0, max_episodes)
     # epsilon is decay linearly espilon[i] is the for episode i
-    
+
     q = np.zeros((env.n_states, env.n_actions))
-    
+
     for i in range(max_episodes):
         s = env.reset()
         action = choose_action(epsilon[i], q, s)
