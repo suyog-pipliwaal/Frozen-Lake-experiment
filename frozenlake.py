@@ -35,9 +35,9 @@ class FrozenLake(Environment):
         self.width = len(lake[0])
         self.height = len(lake)
 
+        Environment.__init__(self, n_states, n_actions, max_steps, pi, seed)
 
         # TODO:
-        Environment.__init__(self, n_states, n_actions, max_steps, pi, seed=None)
 
     def step(self, action):
         state, reward, done = Environment.step(self, action)
@@ -50,14 +50,6 @@ class FrozenLake(Environment):
     def p(self, next_state, state, action):
         # TODO:
 
-        expcted_state = self.take_action(state, action)
-        return expcted_state == next_state
-
-    #The method r returns the expected reward in having transitioned from state to next state given action
-    def r(self, next_state, state, action):
-        # TODO:
-
-        if state in self.goal_states:
         #expected_state = self.take_action(state, action)
         #return expected_state == next_state
 
@@ -91,7 +83,7 @@ class FrozenLake(Environment):
     #NEW METHOD take_action returns the coordinates of the new state after taking an action
     def take_action(self, state, action):
 
-       if state == self.absorbing_state:
+        if state == self.absorbing_state:
             return state
 
         if state == self.hole_state(state) or self.goal_state(state):
@@ -155,10 +147,6 @@ class FrozenLake(Environment):
         if action == 1: #LEFT
            return [-1, 0]
 
-        return [0, 0]
-
-    def is_endstate(self, state):
-        return state == self.endstate()
         if action == 2: #DOWN
            return [0, 1]
 
