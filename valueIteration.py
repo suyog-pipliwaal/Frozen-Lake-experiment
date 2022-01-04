@@ -16,11 +16,11 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
     while max_iterations > n_value_iterations or delta > theta:
         delta = 0
 
-        for state in range(env.n_actions):
+        for state in range(env.n_states):
             previous_value = value[state]
             new_value = []
 
-            for action in range(env.n_states):
+            for action in range(env.n_actions):
                 total_exprected_return = 0
 
                 for next_state in range(env.n_states):
@@ -29,6 +29,7 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
 
                     #Get the discounted reward
                     discounted_reward = env.r(next_state, state, action) + (gamma*value[next_state])
+                    # print("-------", discounted_reward)
 
                     #Expected return for each state
                     total_exprected_return += next_state_probability * discounted_reward
@@ -68,7 +69,7 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
 
     return policy, value
 
-'''if __name__ == '__main__':
+if __name__ == '__main__':
     seed = 0
     # # Small lake
     lake =   [['&', '.', '.', '.'],
@@ -83,4 +84,3 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
     print('## Value iteration')
     policy, value = value_iteration(env, gamma, theta, max_iterations)
     env.render(policy, value)
-'''
