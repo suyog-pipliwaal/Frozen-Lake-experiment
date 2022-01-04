@@ -15,22 +15,31 @@ def linear_sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
         features = env.reset()
         
         q = features.dot(theta)
-        state = 1 # change this line to get current state:
-        action = choose_action(epsilon[i], q, state)
-        done = False
-        while not done:
-            next_state, reward, done = env.step(action)
-            next_action = choose_action(epsilon[i], q, next_state)
-            delta  = reward + gamma*q[next_state, next_action] - q[state, action]
-            for index in range(len(theta)):
-                theta[index] = theta[index] + eta[i]*delta*features[state, action]
-            state = next_state
-            action = next_action
-    return theta
+        print(features.shape)
+        # print("----->", q)
+        # state = np.where(features == 1)
+        # print("state = ", state)
+        print(env.state)
+    #     state = env.state # change this line to get current state:
+    #     action = choose_action(epsilon[i], q, random_state)
+    #     done = False
+    #     while not done:
+    #         next_state, reward, done = env.step(action)
+    #         print("next_state", next_state)
+    #         next_action = choose_action(epsilon[i], q, next_state)
+            
+    #         print("next action", next_action)
+    #         delta  = reward + gamma*q[next_state, next_action] - q[state, action]
+    #         for index in range(len(theta)):
+    #             theta[index] = theta[index] + eta[i]*delta*features[state, action]
+    #         state = next_state
+    #         action = next_action
+    # return theta
 
 if __name__ =='__main__':
     seed = 0
-    max_episodes = 2000
+    # max_episodes = 2000
+    max_episodes = 1
     eta = 0.5
     epsilon = 0.5
     gamma = 0.9
