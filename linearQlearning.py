@@ -2,20 +2,6 @@ import numpy as np
 from LinearWrapper import LinearWrapper
 from chooseAction import choose_action
 from frozenlake import FrozenLake
-# def linear_q_learning(env, max_episodes, eta, gamma, epsilon, seed=None):
-#     random_state = np.random.RandomState(seed)
-
-#     eta = np.linspace(eta, 0, max_episodes)
-#     epsilon = np.linspace(epsilon, 0, max_episodes)
-
-#     theta = np.zeros(env.n_features)
-
-#     for i in range(max_episodes):
-#         features = env.reset()
-#         state = random_state
-#         for action in 
-
-#     return theta
 def linear_q_learning(env, max_episodes, eta, gamma, epsilon, seed=None):
     random_state = np.random.RandomState(seed)
     
@@ -32,19 +18,12 @@ def linear_q_learning(env, max_episodes, eta, gamma, epsilon, seed=None):
 
         done = False
         while not done:
-            #-- Finding the lineare greedy selection
-            actions = range(env.n_actions)
-
             if random_state.rand() < epsilon[i]:
-                action = random_state.choice(actions)
+                action = random_state.choice(env.n_actions)
             else:
-                #-- finding the maximum argument randomly 
-                arg = np.argsort(q[actions])[::-1]
-                n_tied = sum(np.isclose(q[actions], q[actions][arg[0]]))
-                action = np.random.choice(arg[0:n_tied])
-                action =  actions[action]
-                
-            
+                qmax = max(q)
+                best = [a for a in range(env.n_actions) if np.allclose(qmax, q[a])]
+                action = random_state.choice(best)
             next_features, r, done = env.step(action)
             delta = r - q[action]
 

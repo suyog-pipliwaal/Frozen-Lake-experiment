@@ -25,6 +25,7 @@ def linear_sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
         while not done:
             next_features, reward, done = env.step(action)
             next_q = next_features.dot(theta)
+            
             if random_state.rand() < epsilon[i]:
                 next_action = random_state.choice(env.n_actions)
             else:

@@ -19,7 +19,7 @@ def sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
         done = False
         while not done:
             next_state, reward, done = env.step(action)
-            next_action = choose_action(epsilon[i], q, next_state, )
+            next_action = choose_action(epsilon[i], q, next_state)
             q[s, action] += eta[i]* (reward + (gamma * q[next_state, next_action]-q[s, action]))
             s = next_state
             action = next_action

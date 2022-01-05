@@ -1,3 +1,11 @@
+from frozenlake import FrozenLake
+from linearQlearning import linear_q_learning
+from linearSarsa import linear_sarsa
+from policyIteration import policy_iteration
+from qLearning import q_learning
+from sarsa import sarsa
+from valueIteration import value_iteration
+from LinearWrapper import LinearWrapper
 def main():
     seed = 0
 
@@ -16,11 +24,11 @@ def main():
 
     print('')
 
-    print('## Policy iteration')
-    policy, value = policy_iteration(env, gamma, theta, max_iterations)
-    env.render(policy, value)
+    # print('## Policy iteration')
+    # policy, value = policy_iteration(env, gamma, theta, max_iterations)
+    # env.render(policy, value)
 
-    print('')
+    # print('')
 
     print('## Value iteration')
     policy, value = value_iteration(env, gamma, theta, max_iterations)
