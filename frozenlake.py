@@ -86,7 +86,7 @@ class FrozenLake(Environment):
         if state == self.absorbing_state:
             return state
 
-        if state == self.hole_state(state) or self.goal_state(state):
+        if self.hole_state(state) or self.goal_state(state):
             return self.absorbing_state
 
         state_coordinates = self.state_to_coordinates(state)
@@ -100,7 +100,7 @@ class FrozenLake(Environment):
         ]
 
         next_state = self.coordinates_to_state(transition_state_coordinates)
-        return next_state if self.valid_coordinates(transition_state_coordinates) else state
+        return int(next_state) if self.valid_coordinates(transition_state_coordinates) else int(state)
 
     #NEW METHOD that avoids picking cooridinates that are out of environment
     def valid_coordinates(self, coordinates):
@@ -198,14 +198,14 @@ def play(env):
         env.render()
         print('Reward: {0}, done:{1}.'.format(r, done))
 
-# seed = 0
+seed = 0
 
-# # Small lake
-# lake = [['&', '.', '.', '.'],
-#         ['.', '#', '.', '#'],
-#         ['.', '.', '.', '#'],
-#         ['#', '.', '.', '$']]
+# Small lake
+lake = [['&', '.', '.', '.'],
+        ['.', '#', '.', '#'],
+        ['.', '.', '.', '#'],
+        ['#', '.', '.', '$']]
 
-# env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
+env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
 
-# play(env)
+play(env)
