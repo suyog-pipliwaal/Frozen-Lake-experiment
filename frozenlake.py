@@ -198,14 +198,14 @@ def play(env):
         env.render()
         print('Reward: {0}, done:{1}.'.format(r, done))
 
-seed = 0
+# seed = 0
 
-# Small lake
-lake = [['&', '.', '.', '.'],
-        ['.', '#', '.', '#'],
-        ['.', '.', '.', '#'],
-        ['#', '.', '.', '$']]
+# # Small lake
+# lake = [['&', '.', '.', '.'],
+#         ['.', '#', '.', '#'],
+#         ['.', '.', '.', '#'],
+#         ['#', '.', '.', '$']]
 
-env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
+# env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
 
-play(env)
+# play(env)
