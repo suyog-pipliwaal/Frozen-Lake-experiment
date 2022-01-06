@@ -13,7 +13,7 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
     n_value_iterations = 0
     delta = abs(theta) + 1 
 
-    while max_iterations > n_value_iterations or delta > theta:
+    while max_iterations > n_value_iterations and delta > theta:
         delta = 0
 
         for state in range(env.n_states):
