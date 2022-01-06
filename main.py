@@ -1,3 +1,5 @@
+import time
+
 from frozenlake import FrozenLake
 from linearQlearning import linear_q_learning
 from linearSarsa import linear_sarsa
@@ -14,6 +16,16 @@ def main():
               ['.', '#', '.', '#'],
               ['.', '.', '.', '#'],
               ['#', '.', '.', '$']]
+    
+    
+    # big_lake = [['&', '.', '.', '.', '.', '.', '.', '.'],
+    #         ['.', '.', '.', '.', '.', '.', '.', '.'],
+    #         ['.', '.', '.', '#', '.', '.', '.', '.'],
+    #         ['.', '.', '.', '.', '.', '#', '.', '.'],
+    #         ['.', '.', '.', '#', '.', '.', '.', '.'],
+    #         ['.', '#', '#', '.', '.', '.', '#', '.'],
+    #         ['.', '#', '.', '.', '#', '.', '#', '.'],
+    #         ['.', '.', '.', '#', '.', '.', '.', '$']]
 
     env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
 
@@ -24,15 +36,21 @@ def main():
 
     print('')
 
-    # print('## Policy iteration')
-    # policy, value = policy_iteration(env, gamma, theta, max_iterations)
-    # env.render(policy, value)
+    #start = time.time()
+    print('## Policy iteration')
+    policy, value = policy_iteration(env, gamma, theta, max_iterations)
+    #end = time.time()
+    env.render(policy, value)
+    #print("TIme taken by policy iteration is:- ,",end-start)
 
-    # print('')
+    print('')
 
+    #start = time.time()
     print('## Value iteration')
     policy, value = value_iteration(env, gamma, theta, max_iterations)
+    #end = time.time()
     env.render(policy, value)
+    #print("TIme taken by value iteration is:- ,",end-start)
 
     print('')
 
