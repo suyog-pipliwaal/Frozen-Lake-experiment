@@ -68,19 +68,3 @@ def value_iteration(env, gamma, theta, max_iterations, value=None):
     print("Number of value iterations :-> ",n_value_iterations)
 
     return policy, value
-
-if __name__ == '__main__':
-    seed = 0
-    # # Small lake
-    lake =   [['&', '.', '.', '.'],
-              ['.', '#', '.', '#'],
-              ['.', '.', '.', '#'],
-              ['#', '.', '.', '$']]
-    env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
-    gamma = 0.9
-    theta = 0.001
-    max_iterations = 100
-    
-    print('## Value iteration')
-    policy, value = value_iteration(env, gamma, theta, max_iterations)
-    env.render(policy, value)

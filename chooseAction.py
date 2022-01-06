@@ -1,8 +1,8 @@
 import numpy as np
-def choose_action(epsilon, q, state):
-    action = 0
-    if np.random.uniform(0, 1) < epsilon:
-        action = np.random.randint(0, 4)
+def choose_action(epsilon, random_state, actions):
+    if random_state.uniform(0, 1) < epsilon:
+        return random_state.randint(0, 4)
     else:
-        action = np.argmax(q[state,:])
-    return action
+        max_action = np.max(actions)
+        max_index = np.flatnonzero(max_action == actions)
+    return random_state.choice(max_index)
