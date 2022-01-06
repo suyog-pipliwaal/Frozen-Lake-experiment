@@ -36,25 +36,3 @@ def linear_q_learning(env, max_episodes, eta, gamma, epsilon, seed=None):
             features = next_features
 
     return theta
-
-if __name__ =='__main__':
-    seed = 0
-    max_episodes = 2000
-    eta = 0.5
-    epsilon = 0.5
-    gamma = 0.9
-    lake =   [['&', '.', '.', '.'],
-              ['.', '#', '.', '#'],
-              ['.', '.', '.', '#'],
-              ['#', '.', '.', '$']]
-
-    env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
-    linear_env = LinearWrapper(env)
-
-    print('## Q-Learning')
-
-    parameters = linear_q_learning(linear_env, max_episodes, eta, gamma, epsilon, seed=seed)
-    policy, value = linear_env.decode_policy(parameters)
-    linear_env.render(policy, value)
-
-    print('')

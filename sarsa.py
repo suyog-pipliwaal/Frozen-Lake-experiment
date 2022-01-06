@@ -15,11 +15,11 @@ def sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
 
     for i in range(max_episodes):
         s = env.reset()
-        action = choose_action(epsilon[i], q, s)
+        action = choose_action(epsilon[i], random_state, q[s])
         done = False
         while not done:
             next_state, reward, done = env.step(action)
-            next_action = choose_action(epsilon[i], q, next_state)
+            next_action = choose_action(epsilon[i], random_state, q[s])
             q[s, action] += eta[i]* (reward + (gamma * q[next_state, next_action]-q[s, action]))
             s = next_state
             action = next_action
@@ -29,20 +29,3 @@ def sarsa(env, max_episodes, eta, gamma, epsilon, seed=None):
     value = q.max(axis=1)
 
     return policy, value
-if __name__ == '__main__':
-    seed = 0
-    # # Small lake
-    lake =   [['&', '.', '.', '.'],
-              ['.', '#', '.', '#'],
-              ['.', '.', '.', '#'],
-              ['#', '.', '.', '$']]
-    env = FrozenLake(lake, slip=0.1, max_steps=16, seed=seed)
-    print('## Sarsa')
-    max_episodes = 2000
-    eta = 0.5
-    epsilon = 0.5
-    gamma = 0.9
-    policy, value = sarsa(env, max_episodes, eta, gamma, epsilon, seed=seed)
-    env.render(policy, value)
-
-    print('')

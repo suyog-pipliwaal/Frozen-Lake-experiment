@@ -16,7 +16,7 @@ def q_learning(env, max_episodes, eta, gamma, epsilon, seed=None):
 
         while not done:
             #Select action a for state s according to an e-greedy policy based on Q.
-            action = choose_action(epsilon[i], q, s)
+            action = choose_action(epsilon[i], random_state, q[s])
             
             #Observed next state and reward for action at state
             next_state, reward, done= env.step(action)
