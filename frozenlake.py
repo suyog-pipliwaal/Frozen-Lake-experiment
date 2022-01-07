@@ -50,9 +50,7 @@ class FrozenLake(Environment):
     def p(self, next_state, state, action):
         # TODO:
 
-        #expected_state = self.take_action(state, action)
-        #return expected_state == next_state
-
+        
         possible_adjacent_states = []
         distributional_probabilities = np.zeros(self.n_states)
 
@@ -86,12 +84,14 @@ class FrozenLake(Environment):
         if state == self.absorbing_state:
             return state
 
+        #if in the hole state or goal state enter the absorbing state
         if self.hole_state(state) or self.goal_state(state):
             return self.absorbing_state
 
         state_coordinates = self.state_to_coordinates(state)
         action_coordinates = self.action_to_coordinates(action)
 
+        #transitions to next state
         transition_state_coordinates = [
 
             state_coordinates[0] + action_coordinates[0],
@@ -113,14 +113,14 @@ class FrozenLake(Environment):
 
         return True
 
-    #NEW METHOD
+    #NEW METHOD method defines the hole state
     def hole_state(self, state):
         if state == self.absorbing_state:
             return False
 
         return self.lake_flat[int(state)] == '#'
 
-    #NEW METHOD
+    #NEW METHOD this method defines the goal
     def goal_state(self, state):
         if state == self.absorbing_state:
             return False
